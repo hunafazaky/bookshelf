@@ -119,10 +119,16 @@
             Ini adalah struktur HTML untuk masing-masing buku.
             Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
           -->
-          <div data-bookid="123123123" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle">Judul Buku 1</h3>
-            <p data-testid="bookItemAuthor">Penulis: Penulis Buku 1</p>
-            <p data-testid="bookItemYear">Tahun: 2030</p>
+          <template
+            id="incompleteBookTemp"
+            data-bookid="123123123"
+            data-testid="bookItem"
+          >
+            <h3 data-testid="bookItemTitle" class="title">Judul Buku 1</h3>
+            <p data-testid="bookItemAuthor" class="author">
+              Penulis: Penulis Buku 1
+            </p>
+            <p data-testid="bookItemYear" class="year">Tahun: 2030</p>
             <div>
               <button
                 class="btn btn-primary"
@@ -140,7 +146,7 @@
                 Edit Buku
               </button>
             </div>
-          </div>
+          </template>
         </div>
       </section>
 
@@ -152,10 +158,16 @@
             Ini adalah struktur HTML untuk masing-masing buku.
             Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
           -->
-          <div data-bookid="456456456" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle">Judul Buku 2</h3>
-            <p data-testid="bookItemAuthor">Penulis: Penulis Buku 2</p>
-            <p data-testid="bookItemYear">Tahun: 2030</p>
+          <template
+            id="completeBookTemp"
+            data-bookid="456456456"
+            data-testid="bookItem"
+          >
+            <h3 data-testid="bookItemTitle" class="title">Judul Buku 2</h3>
+            <p data-testid="bookItemAuthor" class="author">
+              Penulis: Penulis Buku 2
+            </p>
+            <p data-testid="bookItemYear" class="year">Tahun: 2030</p>
             <div>
               <button
                 class="btn btn-primary"
@@ -173,7 +185,7 @@
                 Edit Buku
               </button>
             </div>
-          </div>
+          </template>
         </div>
       </section>
 
