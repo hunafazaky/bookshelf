@@ -1,55 +1,33 @@
-// Do your work here...
-// console.log("Hello, world!");
-// localStorage.removeItem("BOOK_DATA");
 const STORAGE_KEY = "BOOK_DATA";
 const savedDataString = localStorage.getItem(STORAGE_KEY);
 const bookList = savedDataString ? JSON.parse(savedDataString) : [];
-console.log(bookList);
-const incompleteBook = bookList.filter((book) => !book.isComplete);
-const incompleteBookTemp = document.getElementById("incompleteBookTemp");
+// Filtered Book
+const searchBookResult = document.getElementById("searchBookResult");
+
+// Incomplete Book
 const incompleteBookList = document.getElementById("incompleteBookList");
-const completeBook = bookList.filter((book) => book.isComplete);
-const completeBookTemp = document.getElementById("completeBookTemp");
+const incompleteBookTemp = document.getElementById("incompleteBookTemp");
+
+// Complete Book
 const completeBookList = document.getElementById("completeBookList");
+const completeBookTemp = document.getElementById("completeBookTemp");
 
-document
-  .getElementById("bookForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    let dataObject = Object.fromEntries(formData.entries());
-    // isComplete on or off
-    dataObject.year = parseInt(dataObject.year);
-    dataObject.isComplete = dataObject.isComplete === "on";
-    // push to bookList
-    bookList.push(dataObject);
-    // save to localStorage
-    const dataJSON = JSON.stringify(bookList);
-    localStorage.setItem(STORAGE_KEY, dataJSON);
-    // reset form
-    event.target.reset();
-    // alert
-    // savedDataString = localStorage.getItem(STORAGE_KEY);
-    renderBookList();
-    alert("Buku berhasil disimpan ke rak!");
+// Search Book
+function searchBook(books, keyword) {
+  
+  return books.filter((book) => {
+    return book.title.toLowerCase().includes(keyword.toLowerCase());
   });
+}
 
-function renderBookList() {
-  completeBook.forEach((element) => {
-    const completeBookElement = completeBookTemp.content.cloneNode(true);
-
-    completeBookElement.querySelector(".title").textContent = element.title;
-    completeBookElement.querySelector(".author").textContent =
-      `Penulis: ${element.author}`;
-    completeBookElement.querySelector(".year").textContent =
-      `Tahun: ${element.year}`;
-
-    completeBookList.appendChild(completeBookElement);
-  });
-
+// Render Book
+function renderBook(books) {
+  // Render Incomplete book
+  const incompleteBook = books.filter((book) => !book.isComplete);
+  incompleteBookList.innerHTML = "";
   incompleteBook.forEach((element) => {
     const incompleteBookElement = incompleteBookTemp.content.cloneNode(true);
-
+    incompleteBookElement.querySelector(".book-article").dataset.bookid = element.id;
     incompleteBookElement.querySelector(".title").textContent = element.title;
     incompleteBookElement.querySelector(".author").textContent =
       `Penulis: ${element.author}`;
@@ -58,6 +36,56 @@ function renderBookList() {
 
     incompleteBookList.appendChild(incompleteBookElement);
   });
+
+  // Render Complete book
+  const completeBook = books.filter((book) => book.isComplete);
+  completeBookList.innerHTML = "";
+  completeBook.forEach((element) => {
+    const completeBookElement = completeBookTemp.content.cloneNode(true);
+    completeBookElement.querySelector(".book-article").dataset.bookid = element.id;
+    completeBookElement.querySelector(".title").textContent = element.title;
+    completeBookElement.querySelector(".author").textContent =
+      `Penulis: ${element.author}`;
+    completeBookElement.querySelector(".year").textContent =
+      `Tahun: ${element.year}`;
+
+    completeBookList.appendChild(completeBookElement);
+  });
 }
 
-renderBookList();
+// Add book
+document
+  .getElementById("bookForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+    // Prepare the Object from the Form
+    const formData = new FormData(event.target);
+    let dataObject = Object.fromEntries(formData.entries());
+    // Prepare and Transform the Additional Data
+    dataObject.year = parseInt(dataObject.year);
+    dataObject.isComplete = dataObject.isComplete === "on";
+    dataObject.id = crypto.randomUUID();
+    // Prepare the New JSON String
+    bookList.push(dataObject);
+    const dataJSON = JSON.stringify(bookList);
+    // Save to localStorage
+    localStorage.setItem(STORAGE_KEY, dataJSON);
+    // Post-proccess
+    event.target.reset();
+    console.log(bookList);
+    renderBook(bookList);
+    alert("Buku berhasil disimpan ke rak!");
+  });
+
+// Search Book
+document
+  .getElementById("searchBook")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+    const keyword = document.getElementById("searchBookTitle").value;
+    const filteredBooks = searchBook(bookList, keyword);
+    // renderBook(filteredBooks);
+    console.log(filteredBooks);
+  });
+
+renderBook(bookList);
