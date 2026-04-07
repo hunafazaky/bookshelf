@@ -109,16 +109,22 @@
             </div>
           </div>
         </form>
-        <div id="FilteredBookList">
-          <template id="FilteredBookTemp">
+        <div id="filteredBookList">
+          <template id="filteredBookTemp">
             <div
               class="book-article"
               data-bookid="{{ ID_buku }}"
               data-testid="bookItem"
             >
-              <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
-              <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
-              <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
+              <h3 data-testid="bookItemTitle" class="title">
+                {{ judul_buku }}
+              </h3>
+              <p data-testid="bookItemAuthor" class="author">
+                Penulis: {{ penulis_buku }}
+              </p>
+              <p data-testid="bookItemYear" class="year">
+                Tahun: {{ tahun_rilis_buku }}
+              </p>
               <div>
                 <button data-testid="bookItemIsCompleteButton">
                   {{ tombol_untuk_ubah_kondisi }}

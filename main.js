@@ -1,8 +1,12 @@
+// Prepare Local Storage
 const STORAGE_KEY = "BOOK_DATA";
 const savedDataString = localStorage.getItem(STORAGE_KEY);
 const bookList = savedDataString ? JSON.parse(savedDataString) : [];
+
 // Filtered Book
 const searchBookResult = document.getElementById("searchBookResult");
+const filteredBookList = document.getElementById("filteredBookList");
+const filteredBookTemp = document.getElementById("filteredBookTemp");
 
 // Incomplete Book
 const incompleteBookList = document.getElementById("incompleteBookList");
@@ -14,20 +18,33 @@ const completeBookTemp = document.getElementById("completeBookTemp");
 
 // Search Book
 function searchBook(books, keyword) {
-  
-  return books.filter((book) => {
-    return book.title.toLowerCase().includes(keyword.toLowerCase());
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(keyword.toLowerCase()),
+  );
+  filteredBookList.innerHTML = "";
+  filteredBooks.forEach((element) => {
+    const filteredBookElement = filteredBookTemp.content.cloneNode(true);
+    filteredBookElement.querySelector(".book-article").dataset.bookid =
+      element.id;
+    filteredBookElement.querySelector(".title").textContent = element.title;
+    filteredBookElement.querySelector(".author").textContent =
+      `Penulis: ${element.author}`;
+    filteredBookElement.querySelector(".year").textContent =
+      `Tahun: ${element.year}`;
+
+    filteredBookList.appendChild(filteredBookElement);
   });
 }
 
 // Render Book
 function renderBook(books) {
   // Render Incomplete book
-  const incompleteBook = books.filter((book) => !book.isComplete);
+  const incompleteBooks = books.filter((book) => !book.isComplete);
   incompleteBookList.innerHTML = "";
-  incompleteBook.forEach((element) => {
+  incompleteBooks.forEach((element) => {
     const incompleteBookElement = incompleteBookTemp.content.cloneNode(true);
-    incompleteBookElement.querySelector(".book-article").dataset.bookid = element.id;
+    incompleteBookElement.querySelector(".book-article").dataset.bookid =
+      element.id;
     incompleteBookElement.querySelector(".title").textContent = element.title;
     incompleteBookElement.querySelector(".author").textContent =
       `Penulis: ${element.author}`;
@@ -38,11 +55,12 @@ function renderBook(books) {
   });
 
   // Render Complete book
-  const completeBook = books.filter((book) => book.isComplete);
+  const completeBooks = books.filter((book) => book.isComplete);
   completeBookList.innerHTML = "";
-  completeBook.forEach((element) => {
+  completeBooks.forEach((element) => {
     const completeBookElement = completeBookTemp.content.cloneNode(true);
-    completeBookElement.querySelector(".book-article").dataset.bookid = element.id;
+    completeBookElement.querySelector(".book-article").dataset.bookid =
+      element.id;
     completeBookElement.querySelector(".title").textContent = element.title;
     completeBookElement.querySelector(".author").textContent =
       `Penulis: ${element.author}`;
@@ -83,9 +101,7 @@ document
   .addEventListener("submit", function (event) {
     event.preventDefault();
     const keyword = document.getElementById("searchBookTitle").value;
-    const filteredBooks = searchBook(bookList, keyword);
-    // renderBook(filteredBooks);
-    console.log(filteredBooks);
+    searchBook(bookList, keyword);
   });
 
 renderBook(bookList);
