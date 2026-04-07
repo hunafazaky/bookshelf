@@ -71,6 +71,12 @@ function renderBook(books) {
   });
 }
 
+// Checkbox change status
+document.getElementById("bookFormIsComplete").addEventListener("change", function (event) {
+  const isChecked = event.target.checked;
+   document.getElementById("isCompleteStatus").textContent = isChecked ? "Selesai dibaca" : "Belum selesai dibaca";
+})
+
 // Add book
 document
   .getElementById("bookForm")

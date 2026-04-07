@@ -20,18 +20,18 @@
     <!-- Lampirkan `defer` jika pemanggilan dilakukan dalam <head> -->
     <script defer src="main.js"></script>
   </head>
-  <body class="m-2">
-    <header>
-      <h1>Bookshelf App</h1>
+  <body data-bs-theme="dark">
+    <header class="m-4">
+      <h1 class="text-center fw-bold">Bookshelf App</h1>
     </header>
     <main>
-      <section class="mb-4 p-2 border rounded">
+      <section class="m-2 p-2 border rounded">
         <h2>Tambah Buku Baru</h2>
         <form id="bookForm" data-testid="bookForm">
-          <div>
+          <div class="mb-2">
             <label class="form-label" for="bookFormTitle">Judul</label>
             <input
-              class="form-control"
+              class="form-control form-control-sm"
               id="bookFormTitle"
               name="title"
               type="text"
@@ -39,10 +39,10 @@
               data-testid="bookFormTitleInput"
             />
           </div>
-          <div>
+          <div class="mb-2">
             <label class="form-label" for="bookFormAuthor">Penulis</label>
             <input
-              class="form-control"
+              class="form-control form-control-sm"
               id="bookFormAuthor"
               name="author"
               type="text"
@@ -50,10 +50,10 @@
               data-testid="bookFormAuthorInput"
             />
           </div>
-          <div>
+          <div class="mb-2">
             <label class="form-label" for="bookFormYear">Tahun</label>
             <input
-              class="form-control"
+              class="form-control form-control-sm"
               id="bookFormYear"
               name="year"
               type="number"
@@ -61,7 +61,7 @@
               data-testid="bookFormYearInput"
             />
           </div>
-          <div class="form-check">
+          <div class="mb-2 form-check">
             <label class="form-check-label" for="bookFormIsComplete"
               >Selesai dibaca</label
             >
@@ -73,108 +73,75 @@
               data-testid="bookFormIsCompleteCheckbox"
             />
           </div>
-          <button
-            class="btn btn-success"
-            id="bookFormSubmit"
-            type="submit"
-            data-testid="bookFormSubmitButton"
-          >
-            Masukkan Buku ke rak <span>Belum selesai dibaca</span>
-          </button>
+          <div class="d-flex justify-content-end">
+            <button
+              class="btn btn-sm btn-success"
+              id="bookFormSubmit"
+              type="submit"
+              data-testid="bookFormSubmitButton"
+            >
+              Masukkan Buku ke rak:
+              <span id="isCompleteStatus" class="text-warning"
+                >Belum selesai dibaca</span
+              >
+            </button>
+          </div>
         </form>
       </section>
 
-      <section class="mb-4 p-2 border rounded">
+      <section class="m-2 p-2 border rounded">
         <h2>Cari Buku</h2>
         <form id="searchBook" data-testid="searchBookForm">
           <label class="form-label" for="searchBookTitle">Judul</label>
-          <div class="row">
-            <div class="col-sm-9">
-              <input
-                class="form-control"
-                id="searchBookTitle"
-                type="text"
-                data-testid="searchBookFormTitleInput"
-              />
-            </div>
-            <div class="col-sm">
-              <button
-                class="btn btn-success form-control"
-                id="searchSubmit"
-                type="submit"
-                data-testid="searchBookFormSubmitButton"
-              >
-                Cari
-              </button>
-            </div>
+          <div class="input-group">
+            <input
+              class="form-control form-control-sm"
+              id="searchBookTitle"
+              type="text"
+              data-testid="searchBookFormTitleInput"
+              aria-describedby="searchSubmit"
+            />
+            <button
+              class="btn btn-sm btn-success form-control-sm fw-bold px-4"
+              id="searchSubmit"
+              type="submit"
+              data-testid="searchBookFormSubmitButton"
+            >
+              Cari
+            </button>
           </div>
         </form>
         <div id="filteredBookList">
           <template id="filteredBookTemp">
             <div
-              class="book-article"
-              data-bookid="{{ ID_buku }}"
+              class="book-article my-2 p-2 border rounded"
+              data-bookid="789789789"
               data-testid="bookItem"
             >
-              <h3 data-testid="bookItemTitle" class="title">
-                {{ judul_buku }}
+              <h3 data-testid="bookItemTitle" class="title fw-bold">
+                Judul Buku 1
               </h3>
-              <p data-testid="bookItemAuthor" class="author">
-                Penulis: {{ penulis_buku }}
-              </p>
-              <p data-testid="bookItemYear" class="year">
-                Tahun: {{ tahun_rilis_buku }}
-              </p>
-              <div>
-                <button data-testid="bookItemIsCompleteButton">
-                  {{ tombol_untuk_ubah_kondisi }}
-                </button>
-                <button data-testid="bookItemDeleteButton">
-                  {{ tombol_untuk_hapus }}
-                </button>
-                <button data-testid="bookItemEditButton">
-                  {{ tombol_untuk_edit }}
-                </button>
+              <div class="mb-2">
+                <p data-testid="bookItemAuthor" class="author">
+                  Penulis: Penulis Buku 1
+                </p>
+                <p data-testid="bookItemYear" class="year">Tahun: 2030</p>
               </div>
-            </div>
-          </template>
-        </div>
-      </section>
-
-      <section class="mb-4 p-2 border rounded">
-        <h2>Belum selesai dibaca</h2>
-
-        <div id="incompleteBookList" data-testid="incompleteBookList">
-          <!-- 
-            Ini adalah struktur HTML untuk masing-masing buku.
-            Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
-          -->
-          <template id="incompleteBookTemp">
-            <div
-              class="book-article"
-              data-bookid="123123123"
-              data-testid="bookItem"
-            >
-              <h3 data-testid="bookItemTitle" class="title">Judul Buku 1</h3>
-              <p data-testid="bookItemAuthor" class="author">
-                Penulis: Penulis Buku 1
-              </p>
-              <p data-testid="bookItemYear" class="year">Tahun: 2030</p>
-              <div>
+              <div class="btn-group" role="group" aria-label="Basic example">
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-sm btn-primary"
                   data-testid="bookItemIsCompleteButton"
                 >
                   Selesai dibaca
                 </button>
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-sm btn-outline-danger"
                   data-testid="bookItemDeleteButton"
                 >
                   Hapus Buku
                 </button>
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-sm btn-outline-warning"
                   data-testid="bookItemEditButton"
                 >
                   Edit Buku
@@ -185,40 +152,83 @@
         </div>
       </section>
 
-      <section class="mb-4 p-2 border rounded">
-        <h2>Selesai dibaca</h2>
-
-        <div id="completeBookList" data-testid="completeBookList">
-          <!-- 
-            Ini adalah struktur HTML untuk masing-masing buku.
-            Pastikan susunan elemen beserta atribut data-testid menyesuaikan seperti contoh ini.
-          -->
-          <template id="completeBookTemp">
+      <section class="m-2 p-2 border rounded">
+        <h2>Belum selesai dibaca</h2>
+        <div id="incompleteBookList" data-testid="incompleteBookList">
+          <template id="incompleteBookTemp">
             <div
-              class="book-article"
-              data-bookid="456456456"
+              class="book-article my-2 p-2 border rounded"
+              data-bookid="123123123"
               data-testid="bookItem"
             >
-              <h3 data-testid="bookItemTitle" class="title">Judul Buku 2</h3>
-              <p data-testid="bookItemAuthor" class="author">
-                Penulis: Penulis Buku 2
-              </p>
-              <p data-testid="bookItemYear" class="year">Tahun: 2030</p>
-              <div>
+              <h3 data-testid="bookItemTitle" class="title fw-bold">
+                Judul Buku 1
+              </h3>
+              <div class="mb-2">
+                <p data-testid="bookItemAuthor" class="author">
+                  Penulis: Penulis Buku 1
+                </p>
+                <p data-testid="bookItemYear" class="year">Tahun: 2030</p>
+              </div>
+              <div class="btn-group" role="group" aria-label="Basic example">
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-sm btn-outline-primary"
                   data-testid="bookItemIsCompleteButton"
                 >
                   Selesai dibaca
                 </button>
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-sm btn-outline-danger"
                   data-testid="bookItemDeleteButton"
                 >
                   Hapus Buku
                 </button>
                 <button
-                  class="btn btn-primary"
+                  class="btn btn-sm btn-outline-warning"
+                  data-testid="bookItemEditButton"
+                >
+                  Edit Buku
+                </button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <section class="m-2 p-2 border rounded">
+        <h2>Selesai dibaca</h2>
+
+        <div id="completeBookList" data-testid="completeBookList">
+          <template id="completeBookTemp">
+            <div
+              class="book-article my-2 p-2 border rounded"
+              data-bookid="456456456"
+              data-testid="bookItem"
+            >
+              <h3 data-testid="bookItemTitle" class="title fw-bold">
+                Judul Buku 1
+              </h3>
+              <div class="mb-2">
+                <p data-testid="bookItemAuthor" class="author">
+                  Penulis: Penulis Buku 1
+                </p>
+                <p data-testid="bookItemYear" class="year">Tahun: 2030</p>
+              </div>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button
+                  class="btn btn-sm btn-primary"
+                  data-testid="bookItemIsCompleteButton"
+                >
+                  Selesai dibaca
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  data-testid="bookItemDeleteButton"
+                >
+                  Hapus Buku
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-warning"
                   data-testid="bookItemEditButton"
                 >
                   Edit Buku
