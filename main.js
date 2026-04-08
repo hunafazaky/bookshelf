@@ -21,6 +21,9 @@ const appendContent = (list, data) => {
     content.querySelector(".book-author").textContent =
       `Penulis: ${element.author}`;
     content.querySelector(".book-year").textContent = `Tahun: ${element.year}`;
+    element.is_complete
+      ? content.querySelector(".book-status").classList.add("btn-info")
+      : content.querySelector(".book-status").classList.add("btn-secondary");
     list.appendChild(content);
   });
 };
@@ -74,8 +77,8 @@ document
   .addEventListener("change", function (event) {
     const isChecked = event.target.checked;
     document.getElementById("isCompleteStatus").textContent = isChecked
-      ? "Selesai dibaca"
-      : "Belum selesai dibaca";
+      ? "Selesai Dibaca"
+      : "Belum Selesai Dibaca";
   });
 
 // Search Book
