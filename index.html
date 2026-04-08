@@ -17,145 +17,237 @@
     <title>HZ | Bookshelf App</title>
     <script defer src="main.js"></script>
   </head>
-  <body class="row">
-    <header class="col-md-8 offset-md-2 text-center">
-      <h1>Bookshelf App</h1>
+  <body class="container">
+    <header class="row">
+      <h1 class="col-md-8 offset-md-2 text-center">Bookshelf App</h1>
     </header>
-    <main class="col-md-8 offset-md-2">
-      <!-- Kolom Tambah Buku -->
-      <section class="p-2 m-2 border rounded">
-        <h2>Tambah Buku Baru</h2>
-        <form id="bookForm" data-testid="bookForm">
-          <div>
-            <label for="bookFormTitle" class="form-label">Judul</label>
-            <input
-              name="title"
-              id="bookFormTitle"
-              type="text"
-              required
-              data-testid="bookFormTitleInput"
-              class="form-control"
-            />
-          </div>
-          <div>
-            <label for="bookFormAuthor" class="form-label">Penulis</label>
-            <input
-              name="author"
-              id="bookFormAuthor"
-              type="text"
-              required
-              data-testid="bookFormAuthorInput"
-              class="form-control"
-            />
-          </div>
-          <div>
-            <label for="bookFormYear" class="form-label">Tahun</label>
-            <input
-              name="year"
-              id="bookFormYear"
-              type="number"
-              required
-              data-testid="bookFormYearInput"
-              class="form-control"
-            />
-          </div>
-          <div class="form-check">
-            <label for="bookFormIsComplete" class="form-check-label"
-              >Selesai dibaca</label
-            >
-            <input
-              name="is_complete"
-              id="bookFormIsComplete"
-              type="checkbox"
-              data-testid="bookFormIsCompleteCheckbox"
-              class="form-check-input"
-            />
-          </div>
-          <button
-            id="bookFormSubmit"
-            type="submit"
-            data-testid="bookFormSubmitButton"
-            class="btn btn-success"
-          >
-            Masukkan Buku ke Rak:
-            <span id="isCompleteStatus" class="text-warning"
-              >Belum Selesai Dibaca</span
-            >
-          </button>
-        </form>
-      </section>
-      <!-- Kolom Pencarian Buku -->
-      <section class="p-2 m-2 border rounded">
-        <h2>Cari Buku</h2>
-        <form id="searchBook" data-testid="searchBookForm">
-          <label for="searchBookTitle" class="form-label">Judul</label>
-          <div class="input-group">
-            <input
-              id="searchBookTitle"
-              type="text"
-              data-testid="searchBookFormTitleInput"
-              class="form-control"
-            />
+    <main class="row">
+      <div class="col-md-8 offset-md-2">
+        <!-- Kolom Tambah Buku -->
+        <section class="p-2 m-2 border rounded">
+          <h2>Tambah Buku Baru</h2>
+          <form id="bookForm" data-testid="bookForm">
+            <div>
+              <label for="bookFormTitle" class="form-label">Judul</label>
+              <input
+                name="title"
+                id="bookFormTitle"
+                type="text"
+                required
+                data-testid="bookFormTitleInput"
+                class="form-control"
+              />
+            </div>
+            <div>
+              <label for="bookFormAuthor" class="form-label">Penulis</label>
+              <input
+                name="author"
+                id="bookFormAuthor"
+                type="text"
+                required
+                data-testid="bookFormAuthorInput"
+                class="form-control"
+              />
+            </div>
+            <div>
+              <label for="bookFormYear" class="form-label">Tahun</label>
+              <input
+                name="year"
+                id="bookFormYear"
+                type="number"
+                required
+                data-testid="bookFormYearInput"
+                class="form-control"
+              />
+            </div>
+            <div class="form-check">
+              <label for="bookFormIsComplete" class="form-check-label"
+                >Selesai dibaca</label
+              >
+              <input
+                name="is_complete"
+                id="bookFormIsComplete"
+                type="checkbox"
+                data-testid="bookFormIsCompleteCheckbox"
+                class="form-check-input"
+              />
+            </div>
             <button
-              id="searchSubmit"
+              id="bookFormSubmit"
               type="submit"
-              data-testid="searchBookFormSubmitButton"
-              class="btn btn-primary px-4 fw-bold"
+              data-testid="bookFormSubmitButton"
+              class="btn btn-success"
             >
-              Cari
+              Masukkan Buku ke Rak:
+              <span id="isCompleteStatus" class="text-warning"
+                >Belum Selesai Dibaca</span
+              >
             </button>
+          </form>
+        </section>
+        <!-- Kolom Pencarian Buku -->
+        <section class="p-2 m-2 border rounded">
+          <h2>Cari Buku</h2>
+          <form id="searchBook" data-testid="searchBookForm">
+            <label for="searchBookTitle" class="form-label">Judul</label>
+            <div class="input-group">
+              <input
+                id="searchBookTitle"
+                type="text"
+                data-testid="searchBookFormTitleInput"
+                class="form-control"
+              />
+              <button
+                id="searchSubmit"
+                type="submit"
+                data-testid="searchBookFormSubmitButton"
+                class="btn btn-primary px-4 fw-bold"
+              >
+                Cari
+              </button>
+            </div>
+          </form>
+          <div id="searchBookResultList"></div>
+        </section>
+        <!-- Kolom Buku Belum Selesai Dibaca -->
+        <section class="p-2 m-2 border rounded">
+          <h2>Belum selesai dibaca</h2>
+          <div id="incompleteBookList" data-testid="incompleteBookList"></div>
+        </section>
+        <!-- Kolom Buku Selesai Dibaca -->
+        <section class="p-2 m-2 border rounded">
+          <h2>Selesai dibaca</h2>
+          <div id="completeBookList" data-testid="completeBookList"></div>
+        </section>
+      </div>
+    </main>
+    <!-- Template Data Buku -->
+    <template id="bookCardTemplate">
+      <div
+        data-bookid="{{ ID_buku }}"
+        data-testid="bookItem"
+        class="book-article p-2 my-2 border rounded"
+      >
+        <h3 data-testid="bookItemTitle" class="book-title">{{ judul_buku }}</h3>
+        <p data-testid="bookItemAuthor">
+          <span class="fw-bold"> Penulis: </span>
+          <span class="book-author"> {{ penulis_buku }} </span>
+        </p>
+        <p data-testid="bookItemYear">
+          <span class="fw-bold"> Tahun: </span>
+          <span class="book-year"> {{ tahun_rilis_buku }} </span>
+        </p>
+        <div>
+          <button
+            data-testid="bookItemIsCompleteButton"
+            class="book-status btn"
+          >
+            Selesai Dibaca
+          </button>
+          <button
+            data-testid="bookItemDeleteButton"
+            class="book-delete btn btn-danger"
+          >
+            Delete
+          </button>
+          <button
+            data-testid="bookItemEditButton"
+            class="book-update btn btn-warning"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </template>
+    <!-- Modal Dialog -->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Buku</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
-        </form>
-        <div id="searchBookResultList"></div>
-      </section>
-      <!-- Kolom Buku Belum Selesai Dibaca -->
-      <section class="p-2 m-2 border rounded">
-        <h2>Belum selesai dibaca</h2>
-        <div id="incompleteBookList" data-testid="incompleteBookList"></div>
-      </section>
-      <!-- Kolom Buku Selesai Dibaca -->
-      <section class="p-2 m-2 border rounded">
-        <h2>Selesai dibaca</h2>
-        <div id="completeBookList" data-testid="completeBookList"></div>
-      </section>
-      <!-- Template Data Buku -->
-      <template id="bookCardTemplate">
-        <div
-          data-bookid="{{ ID_buku }}"
-          data-testid="bookItem"
-          class="book-article p-2 my-2 border rounded"
-        >
-          <h3 data-testid="bookItemTitle" class="book-title">
-            {{ judul_buku }}
-          </h3>
-          <p data-testid="bookItemAuthor" class="book-author">
-            Penulis: {{ penulis_buku }}
-          </p>
-          <p data-testid="bookItemYear" class="book-year">
-            Tahun: {{ tahun_rilis_buku }}
-          </p>
-          <div>
+          <div class="modal-body">
+            <form id="bookForm" data-testid="bookForm">
+              <div>
+                <label for="editBookFormTitle" class="form-label">Judul</label>
+                <input
+                  name="title"
+                  id="editBookFormTitle"
+                  type="text"
+                  required
+                  class="form-control"
+                />
+              </div>
+              <div>
+                <label for="editBookFormAuthor" class="form-label"
+                  >Penulis</label
+                >
+                <input
+                  name="author"
+                  id="editBookFormAuthor"
+                  type="text"
+                  required
+                  class="form-control"
+                />
+              </div>
+              <div>
+                <label for="editBookFormYear" class="form-label">Tahun</label>
+                <input
+                  name="year"
+                  id="editBookFormYear"
+                  type="number"
+                  required
+                  class="form-control"
+                />
+              </div>
+              <div class="form-check">
+                <label for="editBookFormIsComplete" class="form-check-label"
+                  >Selesai dibaca</label
+                >
+                <input
+                  name="is_complete"
+                  id="editBookFormIsComplete"
+                  type="checkbox"
+                  class="form-check-input"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
             <button
-              data-testid="bookItemIsCompleteButton"
-              class="book-status btn"
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
             >
-              Selesai Dibaca
+              Keluar
             </button>
             <button
-              data-testid="bookItemDeleteButton"
-              class="book-delete btn btn-danger"
+              id="editBookFormSubmit"
+              type="button"
+              class="btn btn-warning"
+              data-bs-dismiss="modal"
             >
-              Delete
-            </button>
-            <button
-              data-testid="bookItemEditButton"
-              class="book-update btn btn-warning"
-            >
-              Edit
+              Simpan Perubahan
             </button>
           </div>
         </div>
-      </template>
-    </main>
+      </div>
+    </div>
   </body>
 </html>
