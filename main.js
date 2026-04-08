@@ -20,7 +20,7 @@ const appendContent = (list, data) => {
     content.querySelector(".book-title").textContent = element.title;
     content.querySelector(".book-author").textContent = element.author;
     content.querySelector(".book-year").textContent = element.year;
-    element.is_complete
+    element.isComplete
       ? content.querySelector(".book-status").classList.add("btn-info")
       : content.querySelector(".book-status").classList.add("btn-secondary");
     list.appendChild(content);
@@ -40,11 +40,11 @@ const searchBook = (books, keyword) => {
 // Render Book
 const renderBook = (books) => {
   // Render Incomplete book
-  const incompleteBooks = books.filter((book) => !book.is_complete);
+  const incompleteBooks = books.filter((book) => !book.isComplete);
   appendContent(incompleteBookList, incompleteBooks);
 
   // Render Complete book
-  const completeBooks = books.filter((book) => book.is_complete);
+  const completeBooks = books.filter((book) => book.isComplete);
   appendContent(completeBookList, completeBooks);
 };
 
@@ -52,7 +52,7 @@ const renderBook = (books) => {
 const toggleBookStatus = (id) => {
   const book = bookList.find((book) => book.id === id);
   if (book) {
-    book.is_complete = !book.is_complete;
+    book.isComplete = !book.isComplete;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(bookList));
     renderBook(bookList);
   }
@@ -74,7 +74,7 @@ const editBook = (id) => {
   document.getElementById("editBookFormAuthor").value = book.author;
   document.getElementById("editBookFormYear").value = book.year;
   document.getElementById("editBookFormIsComplete").checked =
-    book.is_complete === true;
+    book.isComplete === true;
 };
 
 // Add book
@@ -87,7 +87,7 @@ document
     const dataObj = Object.fromEntries(formData.entries());
     // Prepare and Transform the Additional Data
     dataObj.year = parseInt(dataObj.year);
-    dataObj.is_complete = dataObj.is_complete === "on";
+    dataObj.isComplete = dataObj.isComplete === "on";
     dataObj.id = crypto.randomUUID();
     // Prepare the New JSON String
     bookList.push(dataObj);
@@ -117,7 +117,7 @@ document
       bookList[index].year = parseInt(
         document.getElementById("editBookFormYear").value,
       );
-      bookList[index].is_complete = document.getElementById(
+      bookList[index].isComplete = document.getElementById(
         "editBookFormIsComplete",
       ).checked;
 
