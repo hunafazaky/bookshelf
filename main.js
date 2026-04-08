@@ -65,7 +65,6 @@ const deleteBook = (id) => {
       bookList.splice(index, 1);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(bookList));
       renderBook(bookList);
-      alert(`Buku Berjudul "${book.title}" Telah Dihapus.`);
     }
   }
 };
