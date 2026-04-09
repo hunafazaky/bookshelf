@@ -20,21 +20,40 @@ const appendContent = (list, data) => {
     content.querySelector(".book-title").textContent = element.title;
     content.querySelector(".book-author").textContent = element.author;
     content.querySelector(".book-year").textContent = element.year;
-    element.isComplete
-      ? content.querySelector(".book-status").classList.add("btn-info")
-      : content.querySelector(".book-status").classList.add("btn-secondary");
+    if (element.isComplete) {
+      content.querySelector(".book-status").classList.add("btn-info");
+      content.querySelector(".bi-check-square").classList.add("d-none");
+      content.querySelector(".bi-check-square-fill").classList.remove("d-none");
+    } else {
+      content.querySelector(".book-status").classList.add("btn-secondary");
+      content.querySelector(".bi-check-square-fill").classList.add("d-none");
+      content.querySelector(".bi-check-square").classList.remove("d-none");
+    }
     list.appendChild(content);
   });
 };
 
 // Search Book
-const searchBook = (books, keyword) => {
+const searchBook = (books) => {
+  let keyword = document.getElementById("searchBookTitle").value;
+  // Verify If Keyword Exist
+  if (!keyword) {
+    searchBookResultList.innerHTML = "";
+    return;
+  }
+  // Filter Based On keyword
   const searchBookResult = books.filter((book) =>
     book.title.toLowerCase().includes(keyword.toLowerCase()),
   );
-  searchBookResult.length === 0
-    ? (searchBookResultList.textContent = "Buku Tidak Ditemukan.")
-    : appendContent(searchBookResultList, searchBookResult);
+  // Verify If Result Exist
+  if (searchBookResult.length === 0) {
+    searchBookResultList.textContent = "Buku Tidak Ditemukan.";
+    searchBookResultList.classList.add("text-danger", "fw-bold", "mt-2");
+    return;
+  }
+  // Return the Result
+  searchBookResultList.classList.remove("text-danger", "fw-bold", "mt-2");
+  appendContent(searchBookResultList, searchBookResult);
 };
 
 // Render Book
@@ -46,6 +65,7 @@ const renderBook = (books) => {
   // Render Complete book
   const completeBooks = books.filter((book) => book.isComplete);
   appendContent(completeBookList, completeBooks);
+  searchBook(bookList);
 };
 
 // Toggle Status
@@ -56,7 +76,10 @@ const toggleBookStatus = (id) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(bookList));
     renderBook(bookList);
   }
+  // searchBook(bookList);
 };
+
+// Delete Book
 const deleteBook = (id) => {
   const book = bookList.find((book) => book.id === id);
   if (confirm(`Hapus Buku Berjudul "${book.title}" dari Rak?`)) {
@@ -67,7 +90,10 @@ const deleteBook = (id) => {
       renderBook(bookList);
     }
   }
+  // searchBook(bookList);
 };
+
+// Edit Book
 const editBook = (id) => {
   const book = bookList.find((book) => book.id === id);
   document.getElementById("editBookFormTitle").value = book.title;
@@ -75,6 +101,7 @@ const editBook = (id) => {
   document.getElementById("editBookFormYear").value = book.year;
   document.getElementById("editBookFormIsComplete").checked =
     book.isComplete === true;
+  // searchBook(bookList);
 };
 
 // Add book
@@ -143,10 +170,7 @@ document
   .getElementById("searchBook")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    const keyword = document.getElementById("searchBookTitle").value;
-    keyword
-      ? searchBook(bookList, keyword)
-      : (searchBookResultList.innerHTML = "");
+    searchBook(bookList);
   });
 
 // Click Action
