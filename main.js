@@ -22,10 +22,12 @@ const appendContent = (list, data) => {
     content.querySelector(".book-year").textContent = element.year;
     if (element.isComplete) {
       content.querySelector(".book-status").classList.add("btn-info");
+      content.querySelector(".book-status-text").textContent = "Selesai Dibaca";
       content.querySelector(".bi-check-square").classList.add("d-none");
       content.querySelector(".bi-check-square-fill").classList.remove("d-none");
     } else {
       content.querySelector(".book-status").classList.add("btn-secondary");
+      content.querySelector(".book-status-text").textContent = "Belum Selesai Dibaca";
       content.querySelector(".bi-check-square-fill").classList.add("d-none");
       content.querySelector(".bi-check-square").classList.remove("d-none");
     }
@@ -76,7 +78,6 @@ const toggleBookStatus = (id) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(bookList));
     renderBook(bookList);
   }
-  // searchBook(bookList);
 };
 
 // Delete Book
@@ -90,7 +91,6 @@ const deleteBook = (id) => {
       renderBook(bookList);
     }
   }
-  // searchBook(bookList);
 };
 
 // Edit Book
@@ -101,7 +101,6 @@ const editBook = (id) => {
   document.getElementById("editBookFormYear").value = book.year;
   document.getElementById("editBookFormIsComplete").checked =
     book.isComplete === true;
-  // searchBook(bookList);
 };
 
 // Add book
@@ -131,8 +130,8 @@ document
 // Edit Book
 let currentEditBookId = null;
 document
-  .getElementById("editBookFormSubmit")
-  .addEventListener("click", function (event) {
+  .getElementById("editBookForm")
+  .addEventListener("submit", function (event) {
     event.preventDefault();
     const index = bookList.findIndex((data) => data.id === currentEditBookId);
     if (index !== -1) {
@@ -152,6 +151,10 @@ document
       renderBook(bookList);
       currentEditBookId = null;
       alert("Data Buku Berhasil Diperbarui!");
+      // Sembunyikan modal secara manual setelah berhasil
+      const modalElement = document.getElementById("staticBackdrop");
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      modalInstance.hide();
     }
   });
 
@@ -190,7 +193,7 @@ document.addEventListener("click", function (event) {
     deleteBook(bookId);
   }
 
-  // Delete Action
+  // Edit Action
   if (event.target.closest('[data-testid="bookItemEditButton"]')) {
     currentEditBookId = bookId;
     editBook(bookId);
