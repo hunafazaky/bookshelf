@@ -1,38 +1,29 @@
-# Bookshelf App Starter Project
+# Bookshelf App
 
-Ini adalah starter project untuk siswa yang sedang mengerjakan tugas akhir kelas Belajar Membuat Front-End Web untuk Pemula.
+Final submission for Dicoding's "Belajar Membuat Front-End Web untuk Pemula" — add,
+search, edit, delete, and mark books as read, all persisted to `localStorage`.
 
-## Ketentuan Pengerjaan Tugas
+![Screenshot](./assets/bookshelf-app-web.png)
 
-Untuk mempermudah penilaian submission yang dikirim, Anda perlu memahami ketentuan-ketentuan berikut dalam mengerjakan tugas ini.
+**Live demo:** [hunafazaky.github.io/bookshelf-app](https://hunafazaky.github.io/bookshelf-app)
 
-- Anda dilarang mengedit atau menghapus atribut `data-testid` pada elemen-elemen HTML.
-- Ini masih berkaitan dengan poin sebelumnya. Jika Anda memiliki kebutuhan seperti styling elemen dan perlu menambahkan atribut seperti class, itu tidak dilarang selama atribut `data-testid` beserta nilainya tidak diubah atau dihapus.
-- Dalam menampilkan data-data buku, Anda wajib memberikan beberapa atribut pada setiap elemennya.
+## Features
 
-  - `data-bookid`: menampung nilai ID masing-masing buku.
-  - `data-testid`: penanda jenis data buku yang ditampilkan. Berikut daftarnya.
-    - `bookItem`: elemen kontainer yang menampung data-data buku.
-    - `bookItemTitle`: judul buku
-    - `bookItemAuthor`: penulis buku
-    - `bookItemYear`: tahun rilis buku
-    - `bookItemIsCompleteButton`: tombol untuk mengubah kondisi buku dari “Belum selesai dibaca” menjadi “Selesai dibaca” atau sebaliknya.
-    - `bookItemDeleteButton`: tombol untuk menghapus buku.
-    - `bookItemEditButton`: tombol untuk mengubah data buku.
+- Add books with title, author, year, and read status
+- Search by title, results update live and stay in sync after any edit
+- Edit or delete a book, toggle its read status
+- Two shelves: belum selesai dibaca / selesai dibaca
+- Everything persists in `localStorage` — no backend
 
-  Agar pengerjaan tugas lebih mudah, Anda dapat mengikuti templat buku berikut.
+## Submission requirements
 
-```html
-<div data-bookid="{{ ID_buku }}" data-testid="bookItem">
-  <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
-  <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
-  <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
-  <div>
-    <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
-    <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
-    <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
-  </div>
-</div>
-```
+All `data-testid` and `data-bookid` attributes required by the assignment spec are
+present and unchanged — see the book card `<template>` in `index.html`.
 
-Selamat mengerjakan dan sukses selalu!
+## Run Locally
+
+Just open `index.html` in your browser — no install, no build step.
+
+## License
+
+MIT

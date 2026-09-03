@@ -1,0 +1,36 @@
+:root {
+  /* Base palette — shared across every vanilla project */
+  --color-bg: #EEF3F7;
+  --color-panel: #FFFFFF;
+  --color-ink: #0B2A4A;
+  --color-muted: #5B7A99;
+  --color-grid: #C7D9E8;
+  --color-grid-soft: #DCE8F2;
+
+  /* Accent — the one thing that changes per project */
+  --color-accent: #8B5E34;
+  --color-accent-bg: #F3E9DC;
+
+  /* Status */
+  --color-success: #3D8361;
+  --color-success-bg: #E7F1EB;
+  --color-danger: #C1443C;
+  --color-danger-bg: #FBEAE8;
+
+  /* Type */
+  --font-display: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Borders — hairline only, no radius by default */
+  --border: 1px solid var(--color-grid);
+  --radius: 0px;
+}
