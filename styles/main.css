@@ -110,7 +110,7 @@ main {
 }
 
 .status-hint {
-  color: var(--color-accent);
+  color: var(--color-accent-bg);
   font-weight: 600;
 }
 
